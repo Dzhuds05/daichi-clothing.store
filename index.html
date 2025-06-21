@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daichi Clothing </title>
+    <title>Daichi Clothing - Asian Aesthetics</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         .hero-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #722F37 0%, #8B1538 100%);
         }
         .card-hover {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -53,6 +53,27 @@
             align-items: center;
             justify-content: center;
         }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background: #7c3aed;
+            color: white;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .order-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .status-pending { background: #fbbf24; color: #78350f; }
+        .status-processing { background: #60a5fa; color: #1e40af; }
+        .status-shipped { background: #34d399; color: #065f46; }
+        .status-delivered { background: #10b981; color: #064e3b; }
+        .status-cancelled { background: #f87171; color: #7f1d1d; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -61,26 +82,45 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
-                    <h1 class="text-2xl font-bold text-gray-800">StyleHub</h1>
+                    <div class="flex items-center space-x-3">
+                        <!-- Daichi Logo - Text Only -->
+                        <div class="flex flex-col">
+                            <h1 class="text-xl font-bold text-gray-800 leading-tight">DAICHI</h1>
+                            <p class="text-xs text-gray-600 leading-tight">CLOTHING</p>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="text-gray-600 hover:text-purple-600 transition-colors">Home</a>
-                    <a href="#products" class="text-gray-600 hover:text-purple-600 transition-colors">Products</a>
-                    <a href="#about" class="text-gray-600 hover:text-purple-600 transition-colors">About</a>
-                    <a href="#contact" class="text-gray-600 hover:text-purple-600 transition-colors">Contact</a>
+                    <!-- Language Selector -->
+                    <div class="relative">
+                        <select id="languageSelector" class="bg-transparent border border-gray-300 rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+                            <option value="en">🇺🇸 EN</option>
+                            <option value="ru">🇷🇺 RU</option>
+                            <option value="kz">🇰🇿 KZ</option>
+                        </select>
+                    </div>
+                    <a href="#home" class="text-gray-600 hover:text-red-900 transition-colors">Home</a>
+                    <a href="#products" class="text-gray-600 hover:text-red-900 transition-colors">Products</a>
+                    <a href="#about" class="text-gray-600 hover:text-red-900 transition-colors">About</a>
+                    <a href="#contact" class="text-gray-600 hover:text-red-900 transition-colors">Contact</a>
                 </div>
                 
                 <div class="flex items-center space-x-4">
                     <div class="relative">
                         <input type="text" id="searchInput" placeholder="Search products..." 
-                               class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                               class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
                         <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                     </div>
                     
-                    <button id="authBtn" class="text-gray-600 hover:text-purple-600 transition-colors">
-                        <i class="fas fa-user text-xl"></i>
-                    </button>
+                    <div class="relative">
+                        <button id="authBtn" class="text-gray-600 hover:text-purple-600 transition-colors">
+                            <i class="fas fa-user text-xl"></i>
+                        </button>
+                        <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden">
+                            <div id="userDropdownContent"></div>
+                        </div>
+                    </div>
                     
                     <button id="cartBtn" class="relative text-gray-600 hover:text-purple-600 transition-colors">
                         <i class="fas fa-shopping-cart text-xl"></i>
@@ -97,10 +137,10 @@
         <!-- Mobile Menu -->
         <div id="mobileMenu" class="md:hidden hidden bg-white border-t">
             <div class="px-4 py-2 space-y-2">
-                <a href="#home" class="block py-2 text-gray-600 hover:text-purple-600">Home</a>
-                <a href="#products" class="block py-2 text-gray-600 hover:text-purple-600">Products</a>
-                <a href="#about" class="block py-2 text-gray-600 hover:text-purple-600">About</a>
-                <a href="#contact" class="block py-2 text-gray-600 hover:text-purple-600">Contact</a>
+                <a href="#home" class="block py-2 text-gray-600 hover:text-red-900">Home</a>
+                <a href="#products" class="block py-2 text-gray-600 hover:text-red-900">Products</a>
+                <a href="#about" class="block py-2 text-gray-600 hover:text-red-900">About</a>
+                <a href="#contact" class="block py-2 text-gray-600 hover:text-red-900">Contact</a>
             </div>
         </div>
     </nav>
@@ -108,10 +148,18 @@
     <!-- Hero Section -->
     <section id="home" class="hero-gradient text-white py-20">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <h2 class="text-5xl md:text-6xl font-bold mb-6 animate-fadeIn">Premium Fashion</h2>
-            <p class="text-xl md:text-2xl mb-8 animate-fadeIn">Discover the latest trends in sustainable fashion</p>
-            <button onclick="scrollToProducts()" class="bg-white text-purple-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors animate-fadeIn">
-                Shop Now
+            <div class="mb-6">
+                <!-- Text-based Logo -->
+                <div class="flex justify-center mb-6">
+                    <div class="text-center">
+                        <h1 class="text-6xl font-bold text-white mb-2">DAICHI</h1>
+                        <p class="text-xl text-white tracking-widest">CLOTHING</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-xl md:text-2xl mb-8 animate-fadeIn" data-en="Discover elegant designs inspired by Asian culture and craftsmanship" data-ru="Откройте для себя элегантные дизайны, вдохновленные азиатской культурой и мастерством" data-kz="Азия мәдениеті мен қолөнерінен шабыттанған элегантты дизайндарды ашыңыз">Discover elegant designs inspired by Asian culture and craftsmanship</p>
+            <button onclick="scrollToProducts()" class="bg-white text-red-900 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors animate-fadeIn" data-en="Explore Collection" data-ru="Изучить коллекцию" data-kz="Жинақты зерттеу">
+                Explore Collection
             </button>
         </div>
     </section>
@@ -129,21 +177,24 @@
     <!-- Products Section -->
     <section id="products" class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Our Collection</h2>
+                    <h2 class="text-3xl font-bold text-center mb-12 text-gray-800" data-en="Our Collection" data-ru="Наша коллекция" data-kz="Біздің жинақ">Our Collection</h2>
             
             <!-- Filters -->
             <div class="mb-8 flex flex-wrap justify-center gap-4">
-                <button class="filter-btn active px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-colors" data-category="all">
+                <button class="filter-btn active px-6 py-2 rounded-full bg-red-900 text-white hover:bg-red-800 transition-colors" data-category="all" data-en="All Products" data-ru="Все товары" data-kz="Барлық өнімдер">
                     All Products
                 </button>
-                <button class="filter-btn px-6 py-2 rounded-full bg-white text-gray-700 hover:bg-purple-600 hover:text-white transition-colors" data-category="dresses">
+                <button class="filter-btn px-6 py-2 rounded-full bg-white text-gray-700 hover:bg-red-900 hover:text-white transition-colors" data-category="dresses" data-en="Dresses" data-ru="Платья" data-kz="Көйлектер">
                     Dresses
                 </button>
-                <button class="filter-btn px-6 py-2 rounded-full bg-white text-gray-700 hover:bg-purple-600 hover:text-white transition-colors" data-category="tops">
-                    Tops
+                <button class="filter-btn px-6 py-2 rounded-full bg-white text-gray-700 hover:bg-red-900 hover:text-white transition-colors" data-category="capes" data-en="Capes" data-ru="Накидки" data-kz="Жейделер">
+                    Capes
                 </button>
-                <button class="filter-btn px-6 py-2 rounded-full bg-white text-gray-700 hover:bg-purple-600 hover:text-white transition-colors" data-category="jackets">
-                    Jackets
+                <button class="filter-btn px-6 py-2 rounded-full bg-white text-gray-700 hover:bg-red-900 hover:text-white transition-colors" data-category="suits" data-en="Suits" data-ru="Костюмы" data-kz="Костюмдер">
+                    Suits
+                </button>
+                <button class="filter-btn px-6 py-2 rounded-full bg-white text-gray-700 hover:bg-red-900 hover:text-white transition-colors" data-category="bestsellers" data-en="Bestsellers" data-ru="Хиты продаж" data-kz="Ең көп сатылатындар">
+                    Bestsellers
                 </button>
             </div>
             
@@ -159,31 +210,36 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
-                    <h2 class="text-3xl font-bold mb-6 text-gray-800">About StyleHub</h2>
+                    <h2 class="text-3xl font-bold mb-6 text-gray-800" data-en="About Daichi Clothing" data-ru="О Daichi Clothing" data-kz="Daichi Clothing туралы">About Daichi Clothing</h2>
                     <p class="text-gray-600 mb-6">
-                        We're passionate about bringing you the latest in sustainable fashion. Our carefully curated collection 
-                        features high-quality pieces that combine style, comfort, and environmental responsibility.
+                        We're passionate about bringing you authentic Asian aesthetics through carefully crafted clothing. 
+                        Our designs blend traditional Asian elements with contemporary fashion, creating pieces that honor 
+                        cultural heritage while embracing modern style.
                     </p>
                     <p class="text-gray-600 mb-6">
-                        From casual everyday wear to elegant evening pieces, we have something for every occasion and style preference.
+                        From elegant traditional-inspired dresses to modern interpretations of classic Asian garments, 
+                        each piece tells a story of craftsmanship and cultural appreciation.
                     </p>
-                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div class="grid grid-cols-3 gap-4 text-center">
                         <div>
-                            <div class="text-2xl font-bold text-purple-600">500+</div>
-                            <div class="text-gray-600">Products</div>
+                            <div class="text-2xl font-bold text-red-900">20+</div>
+                            <div class="text-gray-600">Unique Designs</div>
                         </div>
                         <div>
-                            <div class="text-2xl font-bold text-purple-600">10k+</div>
+                            <div class="text-2xl font-bold text-red-900">1k+</div>
                             <div class="text-gray-600">Happy Customers</div>
                         </div>
                         <div>
-                            <div class="text-2xl font-bold text-purple-600">99%</div>
-                            <div class="text-gray-600">Satisfaction</div>
+                            <div class="text-2xl font-bold text-red-900">100%</div>
+                            <div class="text-gray-600">Authentic</div>
                         </div>
                     </div>
                 </div>
                 <div class="bg-gray-200 h-96 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-image text-gray-400 text-6xl"></i>
+                    <div class="text-center text-gray-400">
+                        <i class="fas fa-image text-6xl mb-4"></i>
+                        <p>Brand Story Image</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -192,35 +248,35 @@
     <!-- Contact Section -->
     <section id="contact" class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Get In Touch</h2>
+                    <h2 class="text-3xl font-bold text-center mb-12 text-gray-800" data-en="Get In Touch" data-ru="Связаться с нами" data-kz="Біз бен байланысыңыз">Get In Touch</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <div>
                     <h3 class="text-xl font-semibold mb-4">Contact Information</h3>
                     <div class="space-y-4">
                         <div class="flex items-center">
-                            <i class="fas fa-map-marker-alt text-purple-600 w-6"></i>
-                            <span class="ml-3">123 Fashion Street, Style City, SC 12345</span>
+                            <i class="fas fa-map-marker-alt text-red-900 w-6"></i>
+                            <span class="ml-3">Almaty, Kazakhstan</span>
                         </div>
                         <div class="flex items-center">
-                            <i class="fas fa-phone text-purple-600 w-6"></i>
-                            <span class="ml-3">+1 (555) 123-4567</span>
+                            <i class="fas fa-envelope text-red-900 w-6"></i>
+                            <span class="ml-3">hello@daichiclothing.com</span>
                         </div>
                         <div class="flex items-center">
-                            <i class="fas fa-envelope text-purple-600 w-6"></i>
-                            <span class="ml-3">hello@stylehub.com</span>
+                            <i class="fab fa-instagram text-red-900 w-6"></i>
+                            <a href="https://instagram.com/daichi.clothing" target="_blank" class="ml-3 hover:text-red-900 transition-colors">@daichi.clothing</a>
                         </div>
                         <div class="flex items-center">
-                            <i class="fab fa-whatsapp text-purple-600 w-6"></i>
-                            <span class="ml-3">+1 (555) 123-4567</span>
+                            <i class="fab fa-whatsapp text-red-900 w-6"></i>
+                            <span class="ml-3">+7 776 843 27 85</span>
                         </div>
                     </div>
                 </div>
                 <div>
                     <form class="space-y-4">
-                        <input type="text" placeholder="Your Name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <input type="email" placeholder="Your Email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <textarea placeholder="Your Message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
-                        <button type="submit" class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors">
+                        <input type="text" placeholder="Your Name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" data-placeholder-en="Your Name" data-placeholder-ru="Ваше имя" data-placeholder-kz="Сіздің атыңыз">
+                        <input type="email" placeholder="Your Email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" data-placeholder-en="Your Email" data-placeholder-ru="Ваш email" data-placeholder-kz="Сіздің email">
+                        <textarea placeholder="Your Message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" data-placeholder-en="Your Message" data-placeholder-ru="Ваше сообщение" data-placeholder-kz="Сіздің хабарыңыз"></textarea>
+                        <button type="submit" class="w-full bg-red-900 text-white py-3 rounded-lg hover:bg-red-800 transition-colors" data-en="Send Message" data-ru="Отправить сообщение" data-kz="Хабар жіберу">
                             Send Message
                         </button>
                     </form>
@@ -234,8 +290,8 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <h3 class="text-xl font-bold mb-4">StyleHub</h3>
-                    <p class="text-gray-400">Your destination for premium fashion and sustainable style.</p>
+                    <h3 class="text-xl font-bold mb-4">Daichi Clothing</h3>
+                    <p class="text-gray-400">Authentic Asian aesthetics meets contemporary fashion.</p>
                 </div>
                 <div>
                     <h4 class="font-semibold mb-4">Quick Links</h4>
@@ -274,7 +330,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 StyleHub. All rights reserved.</p>
+                <p>&copy; 2025 Daichi Clothing - Asian Aesthetics. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -328,7 +384,7 @@
                         
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Size</label>
-                            <select id="modalProductSize" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <select id="modalProductSize" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
                                 <option value="">Select Size</option>
                             </select>
                         </div>
@@ -340,7 +396,7 @@
                             </div>
                         </div>
                         
-                        <button id="addToCartBtn" class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors">
+                        <button id="addToCartBtn" class="w-full bg-red-900 text-white py-3 rounded-lg hover:bg-red-800 transition-colors">
                             Add to Cart
                         </button>
                     </div>
@@ -362,15 +418,15 @@
             </div>
             <div class="p-6">
                 <form id="authForm">
-                    <div class="mb-4">
+                    <div class="form-group">
                         <input type="email" id="authEmail" placeholder="Email" required
                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
                     </div>
-                    <div class="mb-4">
+                    <div class="form-group">
                         <input type="password" id="authPassword" placeholder="Password" required
                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
                     </div>
-                    <div id="authNameField" class="mb-4 hidden">
+                    <div id="authNameField" class="form-group hidden">
                         <input type="text" id="authName" placeholder="Full Name"
                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
                     </div>
@@ -382,126 +438,737 @@
                     <button id="authToggle" class="text-purple-600 hover:text-purple-700">
                         Don't have an account? Sign up
                     </button>
+                    <div class="mt-2">
+                        <button id="forgotPassword" class="text-sm text-gray-600 hover:text-purple-600">
+                            Forgot your password?
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password Reset Modal -->
+    <div id="passwordResetModal" class="modal">
+        <div class="bg-white rounded-lg max-w-md mx-4 w-full">
+            <div class="p-6 border-b">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold">Reset Password</h2>
+                    <button id="closePasswordResetModal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <p class="text-gray-600 mb-4">Enter your email address and we'll send you a link to reset your password.</p>
+                <form id="passwordResetForm">
+                    <div class="form-group">
+                        <input type="email" id="resetEmail" placeholder="Email" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    <button type="submit" class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors">
+                        Send Reset Link
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="bg-white rounded-lg max-w-4xl mx-4 w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold">My Account</h2>
+                    <button id="closeProfileModal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="flex border-b mb-6">
+                    <button class="tab-button active px-6 py-2 border-b-2 border-purple-500 text-purple-600" data-tab="profile">
+                        Profile
+                    </button>
+                    <button class="tab-button px-6 py-2 text-gray-600" data-tab="addresses">
+                        Addresses
+                    </button>
+                    <button class="tab-button px-6 py-2 text-gray-600" data-tab="orders">
+                        Orders
+                    </button>
+                </div>
+
+                <!-- Profile Tab -->
+                <div id="profileTab" class="tab-content">
+                    <form id="profileForm" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                <input type="text" id="profileName" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" id="profileEmail" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                                <input type="tel" id="profilePhone"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                                <input type="date" id="profileBirthdate"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            </div>
+                        </div>
+                        <button type="submit" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors">
+                            Update Profile
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Addresses Tab -->
+                <div id="addressesTab" class="tab-content hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-semibold">Shipping Addresses</h3>
+                        <button id="addAddressBtn" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                            Add New Address
+                        </button>
+                    </div>
+                    <div id="addressesList" class="space-y-4">
+                        <!-- Addresses will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- Orders Tab -->
+                <div id="ordersTab" class="tab-content hidden">
+                    <h3 class="text-lg font-semibold mb-6">Order History</h3>
+                    <div id="ordersList" class="space-y-4">
+                        <!-- Orders will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Address Modal -->
+    <div id="addressModal" class="modal">
+        <div class="bg-white rounded-lg max-w-md mx-4 w-full">
+            <div class="p-6 border-b">
+                <div class="flex justify-between items-center">
+                    <h2 id="addressModalTitle" class="text-2xl font-bold">Add Address</h2>
+                    <button id="closeAddressModal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <form id="addressForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Label</label>
+                        <input type="text" id="addressLabel" placeholder="Home, Work, etc." required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                        <input type="text" id="addressName" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
+                        <input type="text" id="addressStreet" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                            <input type="text" id="addressCity" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">State</label>
+                            <input type="text" id="addressState" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">ZIP Code</label>
+                            <input type="text" id="addressZip" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                            <input type="text" id="addressCountry" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                        <input type="tel" id="addressPhone"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="addressDefault" class="mr-2">
+                        <label for="addressDefault" class="text-sm text-gray-700">Set as default address</label>
+                    </div>
+                    <button type="submit" class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors">
+                        Save Address
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="bg-white rounded-lg max-w-4xl mx-4 w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold">Checkout</h2>
+                    <button id="closeCheckoutModal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Guest/Login Section -->
+                    <div>
+                        <div id="guestCheckoutSection" class="mb-6">
+                            <h3 class="text-lg font-semibold mb-4">Checkout Options</h3>
+                            <div class="space-y-3">
+                                <button id="loginCheckoutBtn" class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors">
+                                    Login to Your Account
+                                </button>
+                                <button id="guestCheckoutBtn" class="w-full bg-gray-600 text-white py-3 rounded-lg hover:bg-gray-700 transition-colors">
+                                    Continue as Guest
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Shipping Form -->
+                        <div id="shippingForm" class="hidden">
+                            <h3 class="text-lg font-semibold mb-4">Shipping Information</h3>
+                            <form id="checkoutForm" class="space-y-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                                        <input type="text" id="checkoutFirstName" required
+                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                                        <input type="text" id="checkoutLastName" required
+                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <input type="email" id="checkoutEmail" required
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                                    <input type="tel" id="checkoutPhone" required
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
+                                    <input type="text" id="checkoutStreet" required
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                                        <input type="text" id="checkoutCity" required
+                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">State</label>
+                                        <input type="text" id="checkoutState" required
+                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">ZIP Code</label>
+                                        <input type="text" id="checkoutZip" required
+                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                                        <input type="text" id="checkoutCountry" required
+                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                    </div>
+                                </div>
+                                <div id="createAccountSection" class="hidden">
+                                    <div class="flex items-center mb-4">
+                                        <input type="checkbox" id="createAccount" class="mr-2">
+                                        <label for="createAccount" class="text-sm text-gray-700">Create an account for faster checkout next time</label>
+                                    </div>
+                                    <div id="passwordSection" class="hidden">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                        <input type="password" id="checkoutPassword"
+                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Saved Addresses for Logged-in Users -->
+                        <div id="savedAddressesSection" class="hidden">
+                            <h3 class="text-lg font-semibold mb-4">Select Shipping Address</h3>
+                            <div id="savedAddressesList" class="space-y-3">
+                                <!-- Saved addresses will be inserted here -->
+                            </div>
+                            <button id="useNewAddressBtn" class="mt-4 text-purple-600 hover:text-purple-700">
+                                Use a different address
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Order Summary</h3>
+                        <div id="checkoutItems" class="space-y-4 mb-6">
+                            <!-- Checkout items will be inserted here -->
+                        </div>
+                        <div class="border-t pt-4 space-y-2">
+                            <div class="flex justify-between">
+                                <span>Subtotal:</span>
+                                <span id="checkoutSubtotal">$0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Shipping:</span>
+                                <span id="checkoutShipping">$9.99</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Tax:</span>
+                                <span id="checkoutTax">$0.00</span>
+                            </div>
+                            <div class="border-t pt-2 flex justify-between font-bold text-lg">
+                                <span>Total:</span>
+                                <span id="checkoutTotal">$0.00</span>
+                            </div>
+                        </div>
+                        <button id="placeOrderBtn" class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            Place Order
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Sample product data
-        const products = [
-            {
-                id: 1,
-                name: "Elegant Summer Dress",
-                price: 79.99,
-                category: "dresses",
-                image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400",
-                description: "Perfect for summer occasions with breathable fabric and elegant design.",
-                sizes: ["XS", "S", "M", "L", "XL"],
-                colors: ["Blue", "White", "Pink"],
-                featured: true,
-                stock: 15
-            },
-            {
-                id: 2,
-                name: "Casual Denim Jacket",
-                price: 89.99,
-                category: "jackets",
-                image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400",
-                description: "Classic denim jacket that goes with everything.",
-                sizes: ["S", "M", "L", "XL"],
-                colors: ["Blue", "Black", "Light Blue"],
-                featured: true,
-                stock: 20
-            },
-            {
-                id: 3,
-                name: "Silk Blouse",
-                price: 65.99,
-                category: "tops",
-                image: "https://images.unsplash.com/photo-1564257577-286f97bcde5d?w=400",
-                description: "Luxurious silk blouse for professional and casual wear.",
-                sizes: ["XS", "S", "M", "L"],
-                colors: ["White", "Cream", "Black"],
-                featured: false,
-                stock: 12
-            },
-            {
-                id: 4,
-                name: "Floral Maxi Dress",
-                price: 95.99,
-                category: "dresses",
-                image: "https://images.unsplash.com/photo-1572804013427-4d7ca7268217?w=400",
-                description: "Beautiful flowing maxi dress with floral pattern.",
-                sizes: ["S", "M", "L", "XL"],
-                colors: ["Floral Blue", "Floral Pink"],
-                featured: true,
-                stock: 8
-            },
-            {
-                id: 5,
-                name: "Cotton T-Shirt",
-                price: 25.99,
-                category: "tops",
-                image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",
-                description: "Comfortable cotton t-shirt for everyday wear.",
-                sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-                colors: ["White", "Black", "Gray", "Navy"],
-                featured: false,
-                stock: 30
-            },
-            {
-                id: 6,
-                name: "Leather Jacket",
-                price: 199.99,
-                category: "jackets",
-                image: "https://images.unsplash.com/photo-1520975661595-6453be3f7070?w=400",
-                description: "Premium leather jacket with modern cut.",
-                sizes: ["S", "M", "L", "XL"],
-                colors: ["Black", "Brown"],
-                featured: true,
-                stock: 5
-            },
-            {
-                id: 7,
-                name: "Striped Shirt",
-                price: 45.99,
-                category: "tops",
-                image: "https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=400",
-                description: "Classic striped shirt perfect for any occasion.",
-                sizes: ["XS", "S", "M", "L", "XL"],
-                colors: ["Blue/White", "Black/White"],
-                featured: false,
-                stock: 18
-            },
-            {
-                id: 8,
-                name: "Cocktail Dress",
-                price: 129.99,
-                category: "dresses",
-                image: "https://images.unsplash.com/photo-1566479179817-c7f9b4b1b8d3?w=400",
-                description: "Elegant cocktail dress for special occasions.",
-                sizes: ["XS", "S", "M", "L"],
-                colors: ["Black", "Navy", "Burgundy"],
-                featured: false,
-                stock: 10
-            }
-        ];
+        // Product data - will be loaded from JSON
+        let products = [];
 
         // Global variables
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+        let cart = [];
+        let currentUser = null;
         let isLoginMode = true;
         let selectedProduct = null;
+        let editingAddressIndex = -1;
+        let currentTab = 'profile';
 
         // Initialize the website
         document.addEventListener('DOMContentLoaded', function() {
-            displayFeaturedProducts();
-            displayProducts();
+            loadUserData();
+            loadProducts();
             updateCartCount();
             updateAuthButton();
             setupEventListeners();
+            
+            // Initialize language selector
+            const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+            document.getElementById('languageSelector').value = savedLanguage;
+            switchLanguage(savedLanguage);
+            
+            // Language selector event listener
+            document.getElementById('languageSelector').addEventListener('change', function() {
+                switchLanguage(this.value);
+            });
         });
+        const translations = {
+            en: {
+                "Our Collection": "Our Collection",
+                "About Daichi Clothing": "About Daichi Clothing", 
+                "Get In Touch": "Get In Touch",
+                "All Products": "All Products",
+                "Dresses": "Dresses",
+                "Capes": "Capes", 
+                "Suits": "Suits",
+                "Bestsellers": "Bestsellers",
+                "Explore Collection": "Explore Collection",
+                "Send Message": "Send Message",
+                "Your Name": "Your Name",
+                "Your Email": "Your Email", 
+                "Your Message": "Your Message",
+                "Add to Cart": "Add to Cart",
+                "Pre-order Only": "Pre-order Only"
+            },
+            ru: {
+                "Our Collection": "Наша коллекция",
+                "About Daichi Clothing": "О Daichi Clothing",
+                "Get In Touch": "Связаться с нами", 
+                "All Products": "Все товары",
+                "Dresses": "Платья",
+                "Capes": "Накидки",
+                "Suits": "Костюмы", 
+                "Bestsellers": "Хиты продаж",
+                "Explore Collection": "Изучить коллекцию",
+                "Send Message": "Отправить сообщение",
+                "Your Name": "Ваше имя",
+                "Your Email": "Ваш email",
+                "Your Message": "Ваше сообщение", 
+                "Add to Cart": "В корзину",
+                "Pre-order Only": "Только предзаказ"
+            },
+            kz: {
+                "Our Collection": "Біздің жинақ",
+                "About Daichi Clothing": "Daichi Clothing туралы",
+                "Get In Touch": "Біз бен байланысыңыз",
+                "All Products": "Барлық өнімдер", 
+                "Dresses": "Көйлектер",
+                "Capes": "Жейделер",
+                "Suits": "Костюмдер",
+                "Bestsellers": "Ең көп сатылатындар",
+                "Explore Collection": "Жинақты зерттеу", 
+                "Send Message": "Хабар жіберу",
+                "Your Name": "Сіздің атыңыз", 
+                "Your Email": "Сіздің email",
+                "Your Message": "Сіздің хабарыңыз",
+                "Add to Cart": "Себетке қосу",
+                "Pre-order Only": "Тек алдын ала тапсырыс"
+            }
+        };
+
+        function switchLanguage(lang) {
+            // Update elements with data attributes
+            document.querySelectorAll('[data-en]').forEach(element => {
+                if (element.hasAttribute(`data-${lang}`)) {
+                    element.textContent = element.getAttribute(`data-${lang}`);
+                }
+            });
+            
+            // Update placeholders
+            document.querySelectorAll('[data-placeholder-en]').forEach(element => {
+                if (element.hasAttribute(`data-placeholder-${lang}`)) {
+                    element.placeholder = element.getAttribute(`data-placeholder-${lang}`);
+                }
+            });
+            
+            // Store language preference
+            localStorage.setItem('selectedLanguage', lang);
+            
+            // Re-render products with new language
+            displayFeaturedProducts();
+            displayProducts();
+        }
+        async function loadProducts() {
+            try {
+                // For demo purposes, we'll use the product data directly
+                // In a real app, you would fetch from: await fetch('data/products.json')
+                products = [
+                    {
+                        "id": 1,
+                        "name": "Elegant Zhakkard Dress",
+                        "price": 89.99,
+                        "category": "Dresses",
+                        "image": "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=400&h=400&fit=crop",
+                        "description": "An elegant zhakkard dress perfect for special occasions with intricate patterns and premium fabric.",
+                        "sizes": ["XS", "S", "M", "L"],
+                        "colors": ["Navy", "Black", "Burgundy"],
+                        "featured": true,
+                        "stock": 12
+                    },
+                    {
+                        "id": 2,
+                        "name": "Classic Cape",
+                        "price": 129.99,
+                        "category": "Capes",
+                        "image": "https://images.unsplash.com/photo-1544966503-7cc5ac882d5e?w=400&h=400&fit=crop",
+                        "description": "A timeless classic cape that adds sophistication to any outfit.",
+                        "sizes": ["S", "M", "L", "XL"],
+                        "colors": ["Black", "Navy", "Gray"],
+                        "featured": true,
+                        "stock": 8
+                    },
+                    {
+                        "id": 3,
+                        "name": "Tailored Suit",
+                        "price": 199.99,
+                        "category": "Suits",
+                        "image": "https://images.unsplash.com/photo-1595341888016-a3921422f9d9?w=400&h=400&fit=crop",
+                        "description": "Professionally tailored suit for business and formal occasions.",
+                        "sizes": ["XS", "S", "M", "L"],
+                        "colors": ["Black", "Navy", "Charcoal"],
+                        "featured": false,
+                        "stock": 15
+                    },
+                    {
+                        "id": 4,
+                        "name": "Red Satin Dress",
+                        "price": 110.99,
+                        "category": "Bestsellers",
+                        "image": "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400&h=400&fit=crop",
+                        "description": "Stunning red satin dress that makes a bold statement.",
+                        "sizes": ["XS", "S", "M", "L"],
+                        "colors": ["Red", "Black", "Navy"],
+                        "featured": true,
+                        "stock": 10
+                    },
+                    {
+                        "id": 5,
+                        "name": "Vintage White Dress",
+                        "price": 89.99,
+                        "category": "Bestsellers",
+                        "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop",
+                        "description": "Classic vintage white dress with timeless appeal.",
+                        "sizes": ["S", "M", "L", "XL"],
+                        "colors": ["White", "Ivory", "Cream"],
+                        "featured": true,
+                        "stock": 14
+                    },
+                    {
+                        "id": 6,
+                        "name": "Pink Princess Dress",
+                        "price": 100.99,
+                        "category": "Dresses",
+                        "image": "https://images.unsplash.com/photo-1520367745676-56196632073f?w=400&h=400&fit=crop",
+                        "description": "Beautiful pink princess dress perfect for special occasions.",
+                        "sizes": ["XS", "S", "M", "L"],
+                        "colors": ["Pink", "Rose", "Blush"],
+                        "featured": false,
+                        "stock": 9
+                    },
+                    {
+                        "id": 7,
+                        "name": "Wool Cape",
+                        "price": 139.99,
+                        "category": "Capes",
+                        "image": "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=400&h=400&fit=crop",
+                        "description": "Warm and stylish wool cape for autumn and winter.",
+                        "sizes": ["S", "M", "L", "XL"],
+                        "colors": ["Gray", "Camel", "Black"],
+                        "featured": false,
+                        "stock": 7
+                    },
+                    {
+                        "id": 8,
+                        "name": "Black Classic Cape",
+                        "price": 219.99,
+                        "category": "Capes",
+                        "image": "https://images.unsplash.com/photo-1593030103066-0093718efeb9?w=400&h=400&fit=crop",
+                        "description": "Premium black classic cape for the ultimate in elegance.",
+                        "sizes": ["S", "M", "L", "XL"],
+                        "colors": ["Black", "Charcoal"],
+                        "featured": true,
+                        "stock": 5
+                    },
+                    {
+                        "id": 9,
+                        "name": "Black Vintage Dress",
+                        "price": 89.99,
+                        "category": "Bestsellers",
+                        "image": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400&h=400&fit=crop",
+                        "description": "Sophisticated black vintage dress with classic styling.",
+                        "sizes": ["XS", "S", "M", "L"],
+                        "colors": ["Black", "Navy", "Charcoal"],
+                        "featured": true,
+                        "stock": 11
+                    },
+                    {
+                        "id": 10,
+                        "name": "Pink Mini Dress",
+                        "price": 79.99,
+                        "category": "Dresses",
+                        "image": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=400&fit=crop",
+                        "description": "Playful pink mini dress perfect for casual outings.",
+                        "sizes": ["XS", "S", "M", "L"],
+                        "colors": ["Pink", "Coral", "Rose"],
+                        "featured": false,
+                        "stock": 16
+                    },
+                    {
+                        "id": 11,
+                        "name": "Summer Dress",
+                        "price": 69.99,
+                        "category": "Dresses",
+                        "image": "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=400&h=400&fit=crop",
+                        "description": "Light and breezy summer dress for warm weather.",
+                        "sizes": ["XS", "S", "M", "L"],
+                        "colors": ["Yellow", "White", "Blue"],
+                        "featured": false,
+                        "stock": 20
+                    },
+                    {
+                        "id": 12,
+                        "name": "Vintage Style Cape",
+                        "price": 149.99,
+                        "category": "Capes",
+                        "image": "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=400&h=400&fit=crop",
+                        "description": "Vintage-inspired cape with modern comfort and style.",
+                        "sizes": ["S", "M", "L", "XL"],
+                        "colors": ["Brown", "Tan", "Black"],
+                        "featured": false,
+                        "stock": 6
+                    },
+                    {
+                        "id": 13,
+                        "name": "HandMade Suit",
+                        "price": 179.99,
+                        "category": "Suits",
+                        "image": "https://images.unsplash.com/photo-1595341888016-a3921422f9d9?w=400&h=400&fit=crop",
+                        "description": "Exquisitely handmade suit with attention to every detail.",
+                        "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+                        "colors": ["Navy", "Charcoal", "Black"],
+                        "featured": true,
+                        "stock": 8
+                    },
+                    {
+                        "id": 14,
+                        "name": "Purple Mini Dress",
+                        "price": 69.99,
+                        "category": "Bestsellers",
+                        "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop",
+                        "description": "Vibrant purple mini dress that stands out in any crowd.",
+                        "sizes": ["XS", "S", "M", "L"],
+                        "colors": ["Purple", "Violet", "Plum"],
+                        "featured": false,
+                        "stock": 13
+                    },
+                    {
+                        "id": 15,
+                        "name": "Black Maxi Dress",
+                        "price": 99.99,
+                        "category": "Dresses",
+                        "image": "https://images.unsplash.com/photo-1529958030586-3aae4ca485ff?w=400&h=400&fit=crop",
+                        "description": "Elegant black maxi dress for formal and semi-formal events.",
+                        "sizes": ["XS", "S", "M", "L", "XL"],
+                        "colors": ["Black", "Navy", "Charcoal"],
+                        "featured": false,
+                        "stock": 12
+                    },
+                    {
+                        "id": 16,
+                        "name": "Evening Gown",
+                        "price": 289.99,
+                        "category": "Dresses",
+                        "image": "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=400&h=400&fit=crop",
+                        "description": "Luxurious evening gown for the most special occasions.",
+                        "sizes": ["XS", "S", "M", "L", "XL"],
+                        "colors": ["Black", "Navy", "Burgundy", "Emerald"],
+                        "featured": true,
+                        "stock": 4
+                    },
+                    {
+                        "id": 17,
+                        "name": "Winter Cape",
+                        "price": 159.99,
+                        "category": "Capes",
+                        "image": "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=400&h=400&fit=crop",
+                        "description": "Cozy winter cape to keep you warm and stylish.",
+                        "sizes": ["S", "M", "L", "XL"],
+                        "colors": ["Black", "Gray", "Navy"],
+                        "featured": false,
+                        "stock": 9
+                    },
+                    {
+                        "id": 18,
+                        "name": "Grey Wool Cape",
+                        "price": 229.99,
+                        "category": "Capes",
+                        "image": "https://images.unsplash.com/photo-1593030103066-0093718efeb9?w=400&h=400&fit=crop",
+                        "description": "Premium grey wool cape with superior craftsmanship.",
+                        "sizes": ["S", "M", "L", "XL"],
+                        "colors": ["Gray", "Charcoal", "Silver"],
+                        "featured": false,
+                        "stock": 3
+                    },
+                    {
+                        "id": 19,
+                        "name": "Red Corset Dress",
+                        "price": 99.99,
+                        "category": "Bestsellers",
+                        "image": "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=400&fit=crop",
+                        "description": "Bold red corset dress that accentuates your silhouette.",
+                        "sizes": ["XS", "S", "M", "L", "XL"],
+                        "colors": ["Red", "Black", "Burgundy"],
+                        "featured": true,
+                        "stock": 7
+                    },
+                    {
+                        "id": 20,
+                        "name": "Viola Vintage Dress",
+                        "price": 189.99,
+                        "category": "Dresses",
+                        "image": "https://images.unsplash.com/photo-1591047139829-d91aecb6c8ea?w=400&h=400&fit=crop",
+                        "description": "Exquisite viola vintage dress with intricate detailing.",
+                        "sizes": ["XS", "S", "M", "L"],
+                        "colors": ["Purple", "Navy", "Black"],
+                        "featured": false,
+                        "stock": 6
+                    }
+                ];
+                
+                displayFeaturedProducts();
+                displayProducts();
+                createCategoryFilters();
+            } catch (error) {
+                console.error('Error loading products:', error);
+                showNotification('Error loading products', 'error');
+            }
+        }
+
+        // Create category filters dynamically
+        function createCategoryFilters() {
+            const categories = [...new Set(products.map(product => product.category))];
+            const filterContainer = document.querySelector('.mb-8.flex.flex-wrap.justify-center.gap-4');
+            
+            if (filterContainer) {
+                filterContainer.innerHTML = `
+                    <button class="filter-btn active px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-colors" data-category="all">
+                        All Products
+                    </button>
+                    ${categories.map(category => `
+                        <button class="filter-btn px-6 py-2 rounded-full bg-white text-gray-700 hover:bg-purple-600 hover:text-white transition-colors" data-category="${category.toLowerCase()}">
+                            ${category}
+                        </button>
+                    `).join('')}
+                `;
+
+                // Re-attach event listeners for new filter buttons
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        document.querySelectorAll('.filter-btn').forEach(b => {
+                            b.classList.remove('active', 'bg-purple-600', 'text-white');
+                            b.classList.add('bg-white', 'text-gray-700');
+                        });
+                        this.classList.add('active', 'bg-red-900', 'text-white');
+                        this.classList.remove('bg-white', 'text-gray-700');
+                        
+                        const category = this.dataset.category;
+                        filterProductsByCategory(category);
+                    });
+                });
+            }
+        }
+
+        // Load user data from storage
+        function loadUserData() {
+            const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+            const storedUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+            
+            cart = storedCart;
+            currentUser = storedUser;
+        }
 
         // Event Listeners
         function setupEventListeners() {
@@ -521,7 +1188,7 @@
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.filter-btn').forEach(b => {
-                        b.classList.remove('active', 'bg-purple-600', 'text-white');
+                        b.classList.remove('active', 'bg-red-900', 'text-white');
                         b.classList.add('bg-white', 'text-gray-700');
                     });
                     this.classList.add('active', 'bg-purple-600', 'text-white');
@@ -541,10 +1208,50 @@
             document.getElementById('addToCartBtn').addEventListener('click', addToCartFromModal);
 
             // Auth modal
-            document.getElementById('authBtn').addEventListener('click', openAuthModal);
+            document.getElementById('authBtn').addEventListener('click', handleAuthButtonClick);
             document.getElementById('closeAuthModal').addEventListener('click', closeAuthModal);
             document.getElementById('authToggle').addEventListener('click', toggleAuthMode);
             document.getElementById('authForm').addEventListener('submit', handleAuth);
+            document.getElementById('forgotPassword').addEventListener('click', openPasswordResetModal);
+
+            // Password reset modal
+            document.getElementById('closePasswordResetModal').addEventListener('click', closePasswordResetModal);
+            document.getElementById('passwordResetForm').addEventListener('submit', handlePasswordReset);
+
+            // Profile modal
+            document.getElementById('closeProfileModal').addEventListener('click', closeProfileModal);
+            document.getElementById('profileForm').addEventListener('submit', updateProfile);
+
+            // Tab switching
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    switchTab(this.dataset.tab);
+                });
+            });
+
+            // Address modal
+            document.getElementById('addAddressBtn').addEventListener('click', openAddressModal);
+            document.getElementById('closeAddressModal').addEventListener('click', closeAddressModal);
+            document.getElementById('addressForm').addEventListener('submit', saveAddress);
+
+            // Checkout modal
+            document.getElementById('checkoutBtn').addEventListener('click', openCheckoutModal);
+            document.getElementById('closeCheckoutModal').addEventListener('click', closeCheckoutModal);
+            document.getElementById('loginCheckoutBtn').addEventListener('click', () => {
+                closeCheckoutModal();
+                openAuthModal();
+            });
+            document.getElementById('guestCheckoutBtn').addEventListener('click', showGuestCheckoutForm);
+            document.getElementById('useNewAddressBtn').addEventListener('click', showNewAddressForm);
+            document.getElementById('createAccount').addEventListener('change', togglePasswordSection);
+            document.getElementById('placeOrderBtn').addEventListener('click', placeOrder);
+
+            // User dropdown
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#authBtn') && !e.target.closest('#userDropdown')) {
+                    document.getElementById('userDropdown').classList.add('hidden');
+                }
+            });
 
             // Close modals when clicking outside
             window.addEventListener('click', function(e) {
@@ -566,8 +1273,8 @@
                         <h3 class="text-xl font-semibold mb-2">${product.name}</h3>
                         <p class="text-gray-600 mb-4">${product.description.substring(0, 80)}...</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-2xl font-bold text-purple-600">$${product.price}</span>
-                            <button onclick="event.stopPropagation(); quickAddToCart(${product.id})" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors">
+                            <span class="text-2xl font-bold text-purple-600">${product.price}</span>
+                            <button onclick="event.stopPropagation(); quickAddToCart(${product.id})" class="bg-red-900 text-white px-4 py-2 rounded hover:bg-red-800 transition-colors" data-en="Add to Cart" data-ru="В корзину" data-kz="Себетке қосу">
                                 Add to Cart
                             </button>
                         </div>
@@ -586,7 +1293,7 @@
                         <h3 class="text-xl font-semibold mb-2">${product.name}</h3>
                         <p class="text-gray-600 mb-4">${product.description.substring(0, 60)}...</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-2xl font-bold text-purple-600">$${product.price}</span>
+                            <span class="text-2xl font-bold text-purple-600">${product.price}</span>
                             <span class="text-sm text-gray-500">${product.stock} in stock</span>
                         </div>
                     </div>
@@ -608,9 +1315,520 @@
             if (category === 'all') {
                 displayProducts();
             } else {
-                const filtered = products.filter(product => product.category === category);
+                const filtered = products.filter(product => product.category.toLowerCase() === category);
                 displayProducts(filtered);
             }
+        }
+
+        // Authentication Functions
+        function handleAuthButtonClick() {
+            if (currentUser) {
+                toggleUserDropdown();
+            } else {
+                openAuthModal();
+            }
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            const content = document.getElementById('userDropdownContent');
+            
+            if (dropdown.classList.contains('hidden')) {
+                content.innerHTML = `
+                    <div class="px-4 py-2 text-sm text-gray-700 border-b">
+                        <div class="font-medium">${currentUser.name}</div>
+                        <div class="text-gray-500">${currentUser.email}</div>
+                    </div>
+                    <button onclick="openProfileModal()" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <i class="fas fa-user mr-2"></i>My Account
+                    </button>
+                    <button onclick="openOrderHistory()" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <i class="fas fa-box mr-2"></i>Order History
+                    </button>
+                    <button onclick="logout()" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                `;
+                dropdown.classList.remove('hidden');
+            } else {
+                dropdown.classList.add('hidden');
+            }
+        }
+
+        function openAuthModal() {
+            document.getElementById('authModal').classList.add('active');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.remove('active');
+            resetAuthForm();
+        }
+
+        function resetAuthForm() {
+            document.getElementById('authForm').reset();
+            isLoginMode = true;
+            updateAuthModalUI();
+        }
+
+        function toggleAuthMode() {
+            isLoginMode = !isLoginMode;
+            updateAuthModalUI();
+        }
+
+        function updateAuthModalUI() {
+            const title = document.getElementById('authModalTitle');
+            const submitBtn = document.getElementById('authSubmitBtn');
+            const toggle = document.getElementById('authToggle');
+            const nameField = document.getElementById('authNameField');
+
+            if (isLoginMode) {
+                title.textContent = 'Login';
+                submitBtn.textContent = 'Login';
+                toggle.textContent = "Don't have an account? Sign up";
+                nameField.classList.add('hidden');
+                document.getElementById('authName').removeAttribute('required');
+            } else {
+                title.textContent = 'Sign Up';
+                submitBtn.textContent = 'Sign Up';
+                toggle.textContent = 'Already have an account? Login';
+                nameField.classList.remove('hidden');
+                document.getElementById('authName').setAttribute('required', 'required');
+            }
+        }
+
+        function handleAuth(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
+            const name = document.getElementById('authName').value;
+
+            if (isLoginMode) {
+                login(email, password);
+            } else {
+                register(email, password, name);
+            }
+        }
+
+        function login(email, password) {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                updateAuthButton();
+                closeAuthModal();
+                showNotification('Welcome back!');
+                // Merge guest cart with user cart if exists
+                mergeGuestCart();
+            } else {
+                showNotification('Invalid email or password', 'error');
+            }
+        }
+
+        function register(email, password, name) {
+            if (!name.trim()) {
+                showNotification('Please enter your full name', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showNotification('Password must be at least 6 characters', 'error');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            if (users.find(u => u.email === email)) {
+                showNotification('Email already exists', 'error');
+                return;
+            }
+
+            const newUser = {
+                id: Date.now().toString(),
+                email,
+                password,
+                name,
+                phone: '',
+                birthdate: '',
+                addresses: [],
+                orders: [],
+                createdAt: new Date().toISOString()
+            };
+
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            currentUser = newUser;
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            updateAuthButton();
+            closeAuthModal();
+            showNotification('Account created successfully!');
+            mergeGuestCart();
+        }
+
+        function mergeGuestCart() {
+            if (cart.length > 0) {
+                // In a real app, you might want to merge with existing user cart
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            cart = [];
+            localStorage.removeItem('cart');
+            updateAuthButton();
+            updateCartCount();
+            document.getElementById('userDropdown').classList.add('hidden');
+            showNotification('Logged out successfully');
+        }
+
+        function updateAuthButton() {
+            const authBtn = document.getElementById('authBtn');
+            if (currentUser) {
+                authBtn.innerHTML = '<i class="fas fa-user-circle text-xl text-red-900"></i>';
+                authBtn.title = `Welcome, ${currentUser.name}`;
+            } else {
+                authBtn.innerHTML = '<i class="fas fa-user text-xl"></i>';
+                authBtn.title = 'Login / Register';
+            }
+        }
+
+        // Password Reset Functions
+        function openPasswordResetModal() {
+            closeAuthModal();
+            document.getElementById('passwordResetModal').classList.add('active');
+        }
+
+        function closePasswordResetModal() {
+            document.getElementById('passwordResetModal').classList.remove('active');
+            document.getElementById('passwordResetForm').reset();
+        }
+
+        function handlePasswordReset(e) {
+            e.preventDefault();
+            const email = document.getElementById('resetEmail').value;
+            
+            // In a real app, this would send an actual email
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.email === email);
+            
+            if (user) {
+                showNotification('Password reset link sent to your email');
+                closePasswordResetModal();
+            } else {
+                showNotification('Email not found', 'error');
+            }
+        }
+
+        // Profile Management Functions
+        function openProfileModal() {
+            if (!currentUser) {
+                openAuthModal();
+                return;
+            }
+            
+            document.getElementById('userDropdown').classList.add('hidden');
+            populateProfileForm();
+            switchTab('profile');
+            document.getElementById('profileModal').classList.add('active');
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').classList.remove('active');
+        }
+
+        function populateProfileForm() {
+            if (currentUser) {
+                document.getElementById('profileName').value = currentUser.name || '';
+                document.getElementById('profileEmail').value = currentUser.email || '';
+                document.getElementById('profilePhone').value = currentUser.phone || '';
+                document.getElementById('profileBirthdate').value = currentUser.birthdate || '';
+            }
+        }
+
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active', 'border-purple-500', 'text-purple-600');
+                btn.classList.add('text-gray-600');
+            });
+            
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active', 'border-purple-500', 'text-purple-600');
+            document.querySelector(`[data-tab="${tabName}"]`).classList.remove('text-gray-600');
+
+            // Show/hide tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            document.getElementById(`${tabName}Tab`).classList.remove('hidden');
+            currentTab = tabName;
+
+            // Load tab-specific content
+            if (tabName === 'addresses') {
+                displayAddresses();
+            } else if (tabName === 'orders') {
+                displayOrders();
+            }
+        }
+
+        function updateProfile(e) {
+            e.preventDefault();
+            
+            const updatedUser = {
+                ...currentUser,
+                name: document.getElementById('profileName').value,
+                email: document.getElementById('profileEmail').value,
+                phone: document.getElementById('profilePhone').value,
+                birthdate: document.getElementById('profileBirthdate').value
+            };
+
+            // Update in storage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            
+            if (userIndex !== -1) {
+                users[userIndex] = updatedUser;
+                localStorage.setItem('users', JSON.stringify(users));
+                currentUser = updatedUser;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                updateAuthButton();
+                showNotification('Profile updated successfully');
+            }
+        }
+
+        // Address Management Functions
+        function displayAddresses() {
+            const container = document.getElementById('addressesList');
+            
+            if (!currentUser.addresses || currentUser.addresses.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-map-marker-alt text-4xl mb-4"></i>
+                        <p>No addresses saved yet</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = currentUser.addresses.map((address, index) => `
+                <div class="border rounded-lg p-4 ${address.isDefault ? 'border-purple-500 bg-purple-50' : 'border-gray-200'}">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-2">
+                                <h4 class="font-semibold">${address.label}</h4>
+                                ${address.isDefault ? '<span class="text-xs bg-purple-600 text-white px-2 py-1 rounded">Default</span>' : ''}
+                            </div>
+                            <p class="text-gray-600">
+                                ${address.name}<br>
+                                ${address.street}<br>
+                                ${address.city}, ${address.state} ${address.zip}<br>
+                                ${address.country}
+                                ${address.phone ? `<br>Phone: ${address.phone}` : ''}
+                            </p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="editAddress(${index})" class="text-blue-600 hover:text-blue-700">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteAddress(${index})" class="text-red-600 hover:text-red-700">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            ${!address.isDefault ? `<button onclick="setDefaultAddress(${index})" class="text-green-600 hover:text-green-700" title="Set as default">
+                                <i class="fas fa-star"></i>
+                            </button>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openAddressModal(addressIndex = -1) {
+            editingAddressIndex = addressIndex;
+            
+            if (addressIndex >= 0) {
+                const address = currentUser.addresses[addressIndex];
+                document.getElementById('addressModalTitle').textContent = 'Edit Address';
+                document.getElementById('addressLabel').value = address.label;
+                document.getElementById('addressName').value = address.name;
+                document.getElementById('addressStreet').value = address.street;
+                document.getElementById('addressCity').value = address.city;
+                document.getElementById('addressState').value = address.state;
+                document.getElementById('addressZip').value = address.zip;
+                document.getElementById('addressCountry').value = address.country;
+                document.getElementById('addressPhone').value = address.phone || '';
+                document.getElementById('addressDefault').checked = address.isDefault;
+            } else {
+                document.getElementById('addressModalTitle').textContent = 'Add New Address';
+                document.getElementById('addressForm').reset();
+                if (currentUser.name) {
+                    document.getElementById('addressName').value = currentUser.name;
+                }
+            }
+            
+            document.getElementById('addressModal').classList.add('active');
+        }
+
+        function closeAddressModal() {
+            document.getElementById('addressModal').classList.remove('active');
+            editingAddressIndex = -1;
+        }
+
+        function saveAddress(e) {
+            e.preventDefault();
+            
+            const address = {
+                label: document.getElementById('addressLabel').value,
+                name: document.getElementById('addressName').value,
+                street: document.getElementById('addressStreet').value,
+                city: document.getElementById('addressCity').value,
+                state: document.getElementById('addressState').value,
+                zip: document.getElementById('addressZip').value,
+                country: document.getElementById('addressCountry').value,
+                phone: document.getElementById('addressPhone').value,
+                isDefault: document.getElementById('addressDefault').checked
+            };
+
+            if (!currentUser.addresses) {
+                currentUser.addresses = [];
+            }
+
+            // If setting as default, remove default from others
+            if (address.isDefault) {
+                currentUser.addresses.forEach(addr => addr.isDefault = false);
+            }
+
+            // If this is the first address, make it default
+            if (currentUser.addresses.length === 0) {
+                address.isDefault = true;
+            }
+
+            if (editingAddressIndex >= 0) {
+                currentUser.addresses[editingAddressIndex] = address;
+            } else {
+                currentUser.addresses.push(address);
+            }
+
+            updateUserInStorage();
+            displayAddresses();
+            closeAddressModal();
+            showNotification(editingAddressIndex >= 0 ? 'Address updated' : 'Address added');
+        }
+
+        function editAddress(index) {
+            openAddressModal(index);
+        }
+
+        function deleteAddress(index) {
+            if (confirm('Are you sure you want to delete this address?')) {
+                currentUser.addresses.splice(index, 1);
+                
+                // If deleted address was default and there are other addresses, make first one default
+                if (currentUser.addresses.length > 0 && !currentUser.addresses.some(addr => addr.isDefault)) {
+                    currentUser.addresses[0].isDefault = true;
+                }
+                
+                updateUserInStorage();
+                displayAddresses();
+                showNotification('Address deleted');
+            }
+        }
+
+        function setDefaultAddress(index) {
+            currentUser.addresses.forEach((addr, i) => {
+                addr.isDefault = i === index;
+            });
+            updateUserInStorage();
+            displayAddresses();
+            showNotification('Default address updated');
+        }
+
+        function updateUserInStorage() {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            
+            if (userIndex !== -1) {
+                users[userIndex] = currentUser;
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            }
+        }
+
+        // Order Management Functions
+        function displayOrders() {
+            const container = document.getElementById('ordersList');
+            
+            if (!currentUser.orders || currentUser.orders.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-box text-4xl mb-4"></i>
+                        <p>No orders yet</p>
+                        <button onclick="closeProfileModal(); scrollToProducts()" class="mt-4 bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                            Start Shopping
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = currentUser.orders.map(order => `
+                <div class="border rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h4 class="text-lg font-semibold">Order #${order.id}</h4>
+                            <p class="text-gray-600">Placed on ${new Date(order.date).toLocaleDateString()}</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-bold">${order.total.toFixed(2)}</div>
+                            <span class="order-status status-${order.status}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2 mb-4">
+                        ${order.items.map(item => `
+                            <div class="flex items-center gap-3 text-sm">
+                                <div class="w-12 h-12 bg-cover bg-center rounded" style="background-image: url('${item.image}')"></div>
+                                <div class="flex-1">
+                                    <p class="font-medium">${item.name}</p>
+                                    <p class="text-gray-600">Size: ${item.size}, Color: ${item.color}</p>
+                                </div>
+                                <div class="text-right">
+                                    <p>Qty: ${item.quantity}</p>
+                                    <p class="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="border-t pt-4">
+                        <div class="flex justify-between items-center">
+                            <div class="text-sm text-gray-600">
+                                ${order.shippingAddress ? `Ship to: ${order.shippingAddress.name}, ${order.shippingAddress.city}` : ''}
+                            </div>
+                            <button onclick="trackOrder('${order.id}')" class="text-purple-600 hover:text-purple-700 text-sm">
+                                Track Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openOrderHistory() {
+            document.getElementById('userDropdown').classList.add('hidden');
+            openProfileModal();
+            switchTab('orders');
+        }
+
+        function trackOrder(orderId) {
+            // In a real app, this would show tracking information
+            showNotification('Tracking information would be displayed here');
         }
 
         // Product Modal Functions
@@ -622,12 +1840,16 @@
             document.getElementById('modalProductPrice').textContent = `${selectedProduct.price}`;
             document.getElementById('modalProductDescription').textContent = selectedProduct.description;
             
-            // Set product image
+            // Set product image - no image, just placeholder
             const imageContainer = document.getElementById('modalProductImage');
-            imageContainer.style.backgroundImage = `url('${selectedProduct.image}')`;
-            imageContainer.style.backgroundSize = 'cover';
-            imageContainer.style.backgroundPosition = 'center';
-            imageContainer.innerHTML = '';
+            imageContainer.style.backgroundImage = 'none';
+            imageContainer.style.backgroundColor = '#f3f4f6';
+            imageContainer.innerHTML = `
+                <div class="text-center text-gray-400">
+                    <i class="fas fa-image text-6xl mb-2"></i>
+                    <p>Product Image</p>
+                </div>
+            `;
 
             // Populate sizes
             const sizeSelect = document.getElementById('modalProductSize');
@@ -637,7 +1859,7 @@
             // Populate colors
             const colorsContainer = document.getElementById('modalProductColors');
             colorsContainer.innerHTML = selectedProduct.colors.map(color => `
-                <button class="color-btn w-8 h-8 rounded-full border-2 border-gray-300 hover:border-purple-500 transition-colors" 
+                <button class="color-btn w-8 h-8 rounded-full border-2 border-gray-300 hover:border-red-500 transition-colors" 
                         style="background-color: ${getColorCode(color)}" 
                         data-color="${color}" 
                         title="${color}">
@@ -647,8 +1869,8 @@
             // Add color selection event listeners
             document.querySelectorAll('.color-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('ring-2', 'ring-purple-500'));
-                    this.classList.add('ring-2', 'ring-purple-500');
+                    document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('ring-2', 'ring-red-500'));
+                    this.classList.add('ring-2', 'ring-red-500');
                 });
             });
 
@@ -675,7 +1897,9 @@
                 'Brown': '#92400E',
                 'Blue/White': 'linear-gradient(45deg, #3B82F6 50%, #FFFFFF 50%)',
                 'Black/White': 'linear-gradient(45deg, #000000 50%, #FFFFFF 50%)',
-                'Burgundy': '#7C2D12'
+                'Burgundy': '#7C2D12',
+                'Red': '#EF4444',
+                'Ivory': '#FFFBEB'
             };
             return colorMap[colorName] || '#9CA3AF';
         }
@@ -690,8 +1914,8 @@
                 name: product.name,
                 price: product.price,
                 image: product.image,
-                size: product.sizes[0], // Default to first available size
-                color: product.colors[0], // Default to first available color
+                size: product.sizes[0],
+                color: product.colors[0],
                 quantity: 1
             };
 
@@ -821,125 +2045,317 @@
             document.getElementById('cartTotal').textContent = total.toFixed(2);
         }
 
-        // Authentication Functions
-        function openAuthModal() {
+        // Checkout Functions
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty', 'error');
+                return;
+            }
+
+            closeCartModal();
+            displayCheckoutItems();
+            
             if (currentUser) {
-                // User is logged in, show logout option
-                if (confirm('Do you want to logout?')) {
-                    logout();
-                }
+                showLoggedInCheckout();
+            } else {
+                showGuestCheckoutOptions();
+            }
+            
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.remove('active');
+            resetCheckoutForm();
+        }
+
+        function resetCheckoutForm() {
+            document.getElementById('checkoutForm').reset();
+            document.getElementById('guestCheckoutSection').classList.remove('hidden');
+            document.getElementById('shippingForm').classList.add('hidden');
+            document.getElementById('savedAddressesSection').classList.add('hidden');
+            document.getElementById('createAccountSection').classList.add('hidden');
+            document.getElementById('passwordSection').classList.add('hidden');
+            document.getElementById('placeOrderBtn').disabled = true;
+        }
+
+        function showGuestCheckoutOptions() {
+            document.getElementById('guestCheckoutSection').classList.remove('hidden');
+            document.getElementById('shippingForm').classList.add('hidden');
+            document.getElementById('savedAddressesSection').classList.add('hidden');
+        }
+
+        function showLoggedInCheckout() {
+            document.getElementById('guestCheckoutSection').classList.add('hidden');
+            
+            if (currentUser.addresses && currentUser.addresses.length > 0) {
+                showSavedAddresses();
+            } else {
+                showNewAddressForm();
+            }
+        }
+
+        function showSavedAddresses() {
+            document.getElementById('savedAddressesSection').classList.remove('hidden');
+            document.getElementById('shippingForm').classList.add('hidden');
+            
+            const container = document.getElementById('savedAddressesList');
+            container.innerHTML = currentUser.addresses.map((address, index) => `
+                <div class="border rounded-lg p-4 cursor-pointer hover:border-purple-500 transition-colors ${address.isDefault ? 'border-purple-500 bg-purple-50' : 'border-gray-200'}" 
+                     onclick="selectAddress(${index})">
+                    <div class="flex items-start gap-3">
+                        <input type="radio" name="selectedAddress" value="${index}" ${address.isDefault ? 'checked' : ''} 
+                               onchange="updatePlaceOrderButton()">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="font-medium">${address.label}</span>
+                                ${address.isDefault ? '<span class="text-xs bg-purple-600 text-white px-2 py-1 rounded">Default</span>' : ''}
+                            </div>
+                            <p class="text-sm text-gray-600">
+                                ${address.name}<br>
+                                ${address.street}<br>
+                                ${address.city}, ${address.state} ${address.zip}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('placeOrderBtn').disabled = false;
+        }
+
+        function selectAddress(index) {
+            document.querySelector(`input[name="selectedAddress"][value="${index}"]`).checked = true;
+            updatePlaceOrderButton();
+        }
+
+        function showNewAddressForm() {
+            document.getElementById('shippingForm').classList.remove('hidden');
+            document.getElementById('savedAddressesSection').classList.add('hidden');
+            document.getElementById('guestCheckoutSection').classList.add('hidden');
+            
+            if (currentUser) {
+                // Pre-fill with user data
+                const nameParts = currentUser.name.split(' ');
+                document.getElementById('checkoutFirstName').value = nameParts[0] || '';
+                document.getElementById('checkoutLastName').value = nameParts.slice(1).join(' ') || '';
+                document.getElementById('checkoutEmail').value = currentUser.email;
+                document.getElementById('checkoutPhone').value = currentUser.phone || '';
+            }
+            
+            // Add event listeners to form fields for validation
+            document.querySelectorAll('#checkoutForm input[required]').forEach(input => {
+                input.addEventListener('input', updatePlaceOrderButton);
+            });
+        }
+
+        function showGuestCheckoutForm() {
+            document.getElementById('shippingForm').classList.remove('hidden');
+            document.getElementById('guestCheckoutSection').classList.add('hidden');
+            document.getElementById('createAccountSection').classList.remove('hidden');
+            
+            // Add event listeners to form fields for validation
+            document.querySelectorAll('#checkoutForm input[required]').forEach(input => {
+                input.addEventListener('input', updatePlaceOrderButton);
+            });
+        }
+
+        function togglePasswordSection() {
+            const createAccount = document.getElementById('createAccount').checked;
+            const passwordSection = document.getElementById('passwordSection');
+            
+            if (createAccount) {
+                passwordSection.classList.remove('hidden');
+                document.getElementById('checkoutPassword').setAttribute('required', 'required');
+            } else {
+                passwordSection.classList.add('hidden');
+                document.getElementById('checkoutPassword').removeAttribute('required');
+            }
+            
+            updatePlaceOrderButton();
+        }
+
+        function updatePlaceOrderButton() {
+            const placeOrderBtn = document.getElementById('placeOrderBtn');
+            let isValid = false;
+            
+            if (currentUser && document.getElementById('savedAddressesSection').classList.contains('hidden') === false) {
+                // User with saved addresses
+                isValid = document.querySelector('input[name="selectedAddress"]:checked') !== null;
+            } else if (document.getElementById('shippingForm').classList.contains('hidden') === false) {
+                // New address form
+                const requiredFields = document.querySelectorAll('#checkoutForm input[required]');
+                isValid = Array.from(requiredFields).every(field => field.value.trim() !== '');
+            }
+            
+            placeOrderBtn.disabled = !isValid;
+        }
+
+        function displayCheckoutItems() {
+            const container = document.getElementById('checkoutItems');
+            
+            container.innerHTML = cart.map(item => `
+                <div class="flex items-center gap-3 py-2">
+                    <div class="w-12 h-12 bg-cover bg-center rounded" style="background-image: url('${item.image}')"></div>
+                    <div class="flex-1">
+                        <h4 class="font-medium text-sm">${item.name}</h4>
+                        <p class="text-xs text-gray-600">Size: ${item.size}, Color: ${item.color}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm">Qty: ${item.quantity}</p>
+                        <p class="font-medium text-sm">${(item.price * item.quantity).toFixed(2)}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = 9.99;
+            const tax = subtotal * 0.08; // 8% tax
+            const total = subtotal + shipping + tax;
+
+            document.getElementById('checkoutSubtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('checkoutShipping').textContent = shipping.toFixed(2);
+            document.getElementById('checkoutTax').textContent = tax.toFixed(2);
+            document.getElementById('checkoutTotal').textContent = total.toFixed(2);
+        }
+
+        function placeOrder() {
+            const orderData = gatherOrderData();
+            
+            if (!orderData) {
+                showNotification('Please fill in all required fields', 'error');
                 return;
             }
-            
-            document.getElementById('authModal').classList.add('active');
-        }
 
-        function closeAuthModal() {
-            document.getElementById('authModal').classList.remove('active');
-        }
-
-        function toggleAuthMode() {
-            isLoginMode = !isLoginMode;
-            const title = document.getElementById('authModalTitle');
-            const submitBtn = document.getElementById('authSubmitBtn');
-            const toggle = document.getElementById('authToggle');
-            const nameField = document.getElementById('authNameField');
-
-            if (isLoginMode) {
-                title.textContent = 'Login';
-                submitBtn.textContent = 'Login';
-                toggle.textContent = "Don't have an account? Sign up";
-                nameField.classList.add('hidden');
-            } else {
-                title.textContent = 'Sign Up';
-                submitBtn.textContent = 'Sign Up';
-                toggle.textContent = 'Already have an account? Login';
-                nameField.classList.remove('hidden');
-            }
-        }
-
-        function handleAuth(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('authEmail').value;
-            const password = document.getElementById('authPassword').value;
-            const name = document.getElementById('authName').value;
-
-            if (isLoginMode) {
-                login(email, password);
-            } else {
-                register(email, password, name);
-            }
-        }
-
-        function login(email, password) {
-            // Simple demo login - in real app, this would validate against a backend
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const user = users.find(u => u.email === email && u.password === password);
-            
-            if (user) {
-                currentUser = user;
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                updateAuthButton();
-                closeAuthModal();
-                showNotification('Welcome back!');
-            } else {
-                showNotification('Invalid credentials', 'error');
-            }
-        }
-
-        function register(email, password, name) {
-            if (!name) {
-                showNotification('Please enter your name', 'error');
-                return;
-            }
-
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            
-            if (users.find(u => u.email === email)) {
-                showNotification('Email already exists', 'error');
-                return;
-            }
-
-            const newUser = {
+            // Create order
+            const order = {
                 id: Date.now().toString(),
-                email,
-                password,
-                name,
-                addresses: [],
-                orders: []
+                date: new Date().toISOString(),
+                items: [...cart],
+                shippingAddress: orderData.shippingAddress,
+                subtotal: parseFloat(document.getElementById('checkoutSubtotal').textContent),
+                shipping: parseFloat(document.getElementById('checkoutShipping').textContent),
+                tax: parseFloat(document.getElementById('checkoutTax').textContent),
+                total: parseFloat(document.getElementById('checkoutTotal').textContent),
+                status: 'pending',
+                customerEmail: orderData.email
             };
 
+            // Handle guest account creation
+            if (orderData.createAccount && !currentUser) {
+                createGuestAccount(orderData);
+            }
+
+            // Add order to user's order history
+            if (currentUser) {
+                if (!currentUser.orders) {
+                    currentUser.orders = [];
+                }
+                currentUser.orders.unshift(order);
+                updateUserInStorage();
+            }
+
+            // Clear cart
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+
+            // Close checkout modal
+            closeCheckoutModal();
+
+            // Show success message and redirect to WhatsApp
+            showNotification('Order placed successfully!');
+            sendOrderToWhatsApp(order);
+        }
+
+        function gatherOrderData() {
+            if (currentUser && document.querySelector('input[name="selectedAddress"]:checked')) {
+                // Using saved address
+                const selectedIndex = document.querySelector('input[name="selectedAddress"]:checked').value;
+                return {
+                    shippingAddress: currentUser.addresses[selectedIndex],
+                    email: currentUser.email,
+                    createAccount: false
+                };
+            } else if (!document.getElementById('shippingForm').classList.contains('hidden')) {
+                // Using new address form
+                const requiredFields = ['checkoutFirstName', 'checkoutLastName', 'checkoutEmail', 
+                                      'checkoutPhone', 'checkoutStreet', 'checkoutCity', 
+                                      'checkoutState', 'checkoutZip', 'checkoutCountry'];
+                
+                // Check if all required fields are filled
+                for (const fieldId of requiredFields) {
+                    if (!document.getElementById(fieldId).value.trim()) {
+                        return null;
+                    }
+                }
+
+                const shippingAddress = {
+                    name: `${document.getElementById('checkoutFirstName').value} ${document.getElementById('checkoutLastName').value}`,
+                    street: document.getElementById('checkoutStreet').value,
+                    city: document.getElementById('checkoutCity').value,
+                    state: document.getElementById('checkoutState').value,
+                    zip: document.getElementById('checkoutZip').value,
+                    country: document.getElementById('checkoutCountry').value,
+                    phone: document.getElementById('checkoutPhone').value
+                };
+
+                return {
+                    shippingAddress,
+                    email: document.getElementById('checkoutEmail').value,
+                    createAccount: document.getElementById('createAccount') ? document.getElementById('createAccount').checked : false,
+                    password: document.getElementById('checkoutPassword') ? document.getElementById('checkoutPassword').value : ''
+                };
+            }
+            
+            return null;
+        }
+
+        function createGuestAccount(orderData) {
+            if (!orderData.password) return;
+
+            const nameParts = orderData.shippingAddress.name.split(' ');
+            const newUser = {
+                id: Date.now().toString(),
+                email: orderData.email,
+                password: orderData.password,
+                name: orderData.shippingAddress.name,
+                phone: orderData.shippingAddress.phone,
+                birthdate: '',
+                addresses: [{
+                    label: 'Home',
+                    ...orderData.shippingAddress,
+                    isDefault: true
+                }],
+                orders: [],
+                createdAt: new Date().toISOString()
+            };
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
             users.push(newUser);
             localStorage.setItem('users', JSON.stringify(users));
             
             currentUser = newUser;
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            
             updateAuthButton();
-            closeAuthModal();
+            
             showNotification('Account created successfully!');
         }
 
-        function logout() {
-            currentUser = null;
-            localStorage.removeItem('currentUser');
-            cart = []; // Clear cart on logout
-            localStorage.removeItem('cart');
-            updateAuthButton();
-            updateCartCount();
-            showNotification('Logged out successfully');
-        }
+        function sendOrderToWhatsApp(order) {
+            const message = `Hello! I'd like to place an order:\n\nOrder #${order.id}\n\n` +
+                          `Items:\n${order.items.map(item => 
+                              `- ${item.name} (${item.size}, ${item.color}) x${item.quantity} - ${(item.price * item.quantity).toFixed(2)}`
+                          ).join('\n')}\n\n` +
+                          `Shipping Address:\n${order.shippingAddress.name}\n${order.shippingAddress.street}\n` +
+                          `${order.shippingAddress.city}, ${order.shippingAddress.state} ${order.shippingAddress.zip}\n` +
+                          `${order.shippingAddress.country}\nPhone: ${order.shippingAddress.phone}\n\n` +
+                          `Total: ${order.total.toFixed(2)}`;
 
-        function updateAuthButton() {
-            const authBtn = document.getElementById('authBtn');
-            if (currentUser) {
-                authBtn.innerHTML = '<i class="fas fa-user-circle text-xl text-purple-600"></i>';
-                authBtn.title = `Logged in as ${currentUser.name}`;
-            } else {
-                authBtn.innerHTML = '<i class="fas fa-user text-xl"></i>';
-                authBtn.title = 'Login / Register';
-            }
+            const phone = '77081803991';
+            const encodedMessage = encodeURIComponent(message);
+            const url = `https://wa.me/${phone}?text=${encodedMessage}`;
+            window.open(url, '_blank');
         }
 
         // Utility Functions
@@ -948,7 +2364,6 @@
         }
 
         function showNotification(message, type = 'success') {
-            // Create notification element
             const notification = document.createElement('div');
             notification.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg text-white font-semibold transform translate-x-full transition-transform duration-300 ${
                 type === 'success' ? 'bg-green-500' : 'bg-red-500'
@@ -957,67 +2372,19 @@
             
             document.body.appendChild(notification);
             
-            // Show notification
             setTimeout(() => {
                 notification.classList.remove('translate-x-full');
             }, 100);
             
-            // Hide notification after 3 seconds
             setTimeout(() => {
                 notification.classList.add('translate-x-full');
                 setTimeout(() => {
-                    document.body.removeChild(notification);
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
                 }, 300);
             }, 3000);
         }
-
-        // Checkout function (simplified for demo)
-        document.getElementById('checkoutBtn').addEventListener('click', function() {
-            if (cart.length === 0) {
-                showNotification('Your cart is empty', 'error');
-                return;
-            }
-            
-            if (!currentUser) {
-                closeCartModal();
-                openAuthModal();
-                showNotification('Please login to checkout', 'error');
-                return;
-            }
-            
-            // Simple checkout simulation
-            const orderId = 'ORD-' + Date.now();
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
-            // Add order to user's order history
-            const order = {
-                id: orderId,
-                items: [...cart],
-                total: total,
-                date: new Date().toISOString(),
-                status: 'Processing'
-            };
-            
-            currentUser.orders = currentUser.orders || [];
-            currentUser.orders.push(order);
-            
-            // Update stored user data
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const userIndex = users.findIndex(u => u.id === currentUser.id);
-            if (userIndex !== -1) {
-                users[userIndex] = currentUser;
-                localStorage.setItem('users', JSON.stringify(users));
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            }
-            
-            // Clear cart
-            cart = [];
-            localStorage.removeItem('cart');
-            updateCartCount();
-            closeCartModal();
-            
-            showNotification(`Order ${orderId} placed successfully! Total: ${total.toFixed(2)}`);
-        });
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
